@@ -69,7 +69,7 @@ var pingPromise = new Promise<PingReply>((resolve, reject) =>
 
 - In `.Then`, `reply` will be the same value as the one that was used to call `resolve()`.
 - In `.Catch`, `e` will be the exception caught by the `catch` block, and used to call `reject()`.
-- `Then` will be called if either `resolve()` or `reject()` was called.
+- `Finally` will be called if either `resolve()` or `reject()` was called.
 
 Of course, `PromiseCS.Tools` provides tools so that you don't have to create your own promises:
 

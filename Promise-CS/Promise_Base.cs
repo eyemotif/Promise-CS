@@ -182,6 +182,79 @@ namespace PromiseCS
             });
         }
 
+        public Promise Then(Func<Promise> onFulfilled)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise newPromise = onFulfilled();
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve();
+                    else reject(newPromise.Error);
+                }
+                else reject(Error);
+            });
+        }
+        public Promise<T> Then<T>(Func<Promise<T>> onFulfilled)
+        {
+            return new Promise<T>((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise<T> newPromise = onFulfilled();
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve(newPromise.Result);
+                    else reject(newPromise.Error);
+                }
+                else reject(Error);
+            });
+        }
+        public Promise Then(Func<Promise> onFulfilled, Action<Exception> onRejected)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise newPromise = onFulfilled();
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve();
+                    else reject(newPromise.Error);
+                }
+                else
+                {
+                    onRejected(Error);
+                    reject(Error);
+                }
+            });
+        }
+        public Promise<T> Then<T>(Func<Promise<T>> onFulfilled, Action<Exception> onRejected)
+        {
+            return new Promise<T>((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise<T> newPromise = onFulfilled();
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve(newPromise.Result);
+                    else reject(newPromise.Error);
+                }
+                else
+                {
+                    onRejected(Error);
+                    reject(Error);
+                }
+            });
+        }
+
         /// <summary>
         /// Gets the <see cref="TaskAwaiter"/> for this <see cref="Promise"/>.
         /// </summary>

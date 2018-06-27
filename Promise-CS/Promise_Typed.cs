@@ -234,6 +234,79 @@ namespace PromiseCS
             });
         }
 
+        public new Promise Then(Func<TResult, Promise> onFulfilled)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise newPromise = onFulfilled(Result);
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve();
+                    else reject(newPromise.Error);
+                }
+                else reject(Error);
+            });
+        }
+        public new Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled)
+        {
+            return new Promise<T>((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise<T> newPromise = onFulfilled(Result);
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve(newPromise.Result);
+                    else reject(newPromise.Error);
+                }
+                else reject(Error);
+            });
+        }
+        public new Promise Then(Func<TResult, Promise> onFulfilled, Action<Exception> onRejected)
+        {
+            return new Promise((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise newPromise = onFulfilled(Result);
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve();
+                    else reject(newPromise.Error);
+                }
+                else
+                {
+                    onRejected(Error);
+                    reject(Error);
+                }
+            });
+        }
+        public new Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled, Action<Exception> onRejected)
+        {
+            return new Promise<T>((resolve, reject) =>
+            {
+                Wait();
+                if (IsFulfilled)
+                {
+                    Promise<T> newPromise = onFulfilled(Result);
+                    newPromise.Wait();
+
+                    if (newPromise.IsFulfilled) resolve(newPromise.Result);
+                    else reject(newPromise.Error);
+                }
+                else
+                {
+                    onRejected(Error);
+                    reject(Error);
+                }
+            });
+        }
+
         /// <summary>
         /// Gets a new <see cref="Task{TResult}"/> that will return a <typeparamref name="TResult"/> 
         /// if this <see cref="Promise{TResult}"/> is Fulfilled, or throw an <see cref="Exception"/> 

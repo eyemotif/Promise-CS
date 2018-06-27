@@ -8,7 +8,7 @@ Here is a YouTube series that I'll be doing that will go into the details on how
 
 # Here's a quick guide:
 
-To create a promise from scratch, you only  write this code:
+To create a promise from scratch, you only need this code:
 
 ```c#
 using System; //For the Console class
@@ -19,18 +19,19 @@ using PromiseCS; //For the promise
 ```c#
 Promise<string> delayedPromise = new Promise<string>((resolve, reject) => 
 {
+    //Code to execute asynchronously:
     Thread.Sleep(1000);
     resolve("Hello, world!");
 });
 ```
 
-The promise will start executing immediately. The promise's result will now be `"Hello, world!"` We can then do something like this:
+The promise will start executing immediately. The promise's result will now be `"Hello, world!"`, so we can then do something like this:
 
 ```c#
 delayedPromise.Then(result => Console.WriteLine(result));
 ```
 
-Note that .Then returns a new promise, so you could write the two above statements as one line:
+Note that `.Then` returns a new promise, so you could write the two above statements as one line:
 
 ```c#
 Promise delayedPromise = new Promise<string>((resolve, reject) => 
@@ -47,9 +48,9 @@ did not have a return value. I suggest using the `var` keyword when creating Pro
 Finally, if you want to handle errors within your promise:
 
 ```c#
-using System;
-using System.Net.NetworkInformation;
-using PromiseCS;
+using System; //For the Console class
+using System.Net.NetworkInformation; //For Ping and PingReply
+using PromiseCS; //For the promise
 
 var pingPromise = new Promise<PingReply>((resolve, reject) => 
 {
@@ -68,10 +69,16 @@ var pingPromise = new Promise<PingReply>((resolve, reject) =>
 
 - In `.Then`, `reply` will be the same value as the one that was used to call `resolve()`.
 - In `.Catch`, `e` will be the exception caught by the `catch` block, and used to call `reject()`.
-- `Then` will be called if either `resolve()` or `reject()` was called.
+- `Finally` will be called if either `resolve()` or `reject()` was called.
 
-Of course, `PromiseCS.Tools` provides tools so that you don't have to create your own promises, like `Fetch` and `Delay`.
+Of course, `PromiseCS.Tools` provides tools so that you don't have to create your own promises:
+
+```c#
+using PromiseCS.Tools; //For PTools.Fetch
+
+var fetchPromise = PTools.Fetch("https://github.com")
+    .Then(text => Console.WriteLine($"Contents of GitHub's main page: \n{text}")
+    .Catch(e => Console.WriteLine($"An exception occurred! \n{e}");
+```
 
 And that's it! Please check out the playlist linked at the top if you want an in-depth guide on how to use all the features in this library.
-
-

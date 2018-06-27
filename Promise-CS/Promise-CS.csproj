@@ -6,6 +6,7 @@
     <Description>Implements classes that act similar to Javascript Promises.</Description>
     <PackageIconUrl>https://image.ibb.co/kdDRuo/Icon.png</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RepositoryUrl>https://github.com/aethine/Promise-CS</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

@@ -69,8 +69,6 @@ namespace PromiseCS
                     IsRejected = true;
                     ThisError = e;
                 });
-                if (!IsCompleted)
-                    throw new InvalidOperationException("Promise has completed but has neither been fulfilled or rejected");
             });
         }
         /// <summary>

@@ -28,20 +28,22 @@ namespace PromiseTester
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
+            //The following two blocks of code do almost the same thing, but .ForEachAsync has promise error handling:
+
             //foreach (string s in enumerable)
             //{
             //    Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
             //    watch.Restart();
             //}
 
-            var enumeratePromise = enumerable
-                .ForEachAsync(s =>
-                {
-                    Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
-                    watch.Restart();
-                })
-                .Catch(e => Console.WriteLine(e));
-            enumeratePromise.Wait();
+            //var enumeratePromise = enumerable
+            //    .ForEachAsync(s =>
+            //    {
+            //        Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
+            //        watch.Restart();
+            //    })
+            //    .Catch(e => Console.WriteLine(e));
+            //enumeratePromise.Wait();
 
             Console.WriteLine("Done!");
             Console.ReadKey();

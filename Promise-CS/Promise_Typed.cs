@@ -234,7 +234,13 @@ namespace PromiseCS
             });
         }
 
-        public new Promise Then(Func<TResult, Promise> onFulfilled)
+        /// <summary>
+        /// Returns a new <see cref="Promise"/> that waits for this promise to Fulfill, then waits 
+        /// for a promise returned by a given <see cref="Func{T, TResult}"/>.
+        /// </summary>
+        /// <param name="onFulfilled">The <see cref="Func{T, TResult}"/> to execute when Fulfilled.</param>
+        /// <returns>A new <see cref="Promise"/>.</returns>
+        public Promise Then(Func<TResult, Promise> onFulfilled)
         {
             return new Promise((resolve, reject) =>
             {
@@ -250,7 +256,13 @@ namespace PromiseCS
                 else reject(Error);
             });
         }
-        public new Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled)
+        /// <summary>
+        /// Returns a new <see cref="Promise{TResult}"/> that waits for this promise to Fulfill, 
+        /// then waits for a promise returned by a given <see cref="Func{T, TResult}"/>.
+        /// </summary>
+        /// <param name="onFulfilled">The <see cref="Func{T, TResult}"/> to execute when Fulfilled.</param>
+        /// <returns>A new <see cref="Promise{TResult}"/>.</returns>
+        public Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled)
         {
             return new Promise<T>((resolve, reject) =>
             {
@@ -266,7 +278,15 @@ namespace PromiseCS
                 else reject(Error);
             });
         }
-        public new Promise Then(Func<TResult, Promise> onFulfilled, Action<Exception> onRejected)
+        /// <summary>
+        /// Returns a new <see cref="Promise"/> that waits for this promise to Fulfill or Reject, 
+        /// then if it Fulfills, it waits for a promise returned by a given <see cref="Func{T, TResult}"/>,
+        /// otherwise it executes the other given <see cref="Action{T}"/>.
+        /// </summary>
+        /// <param name="onFulfilled">The <see cref="Func{T, TResult}"/> to execute when Fulfilled.</param>
+        /// <param name="onRejected">The <see cref="Action{T}"/> to execute when Rejected.</param>
+        /// <returns>The new <see cref="Promise"/>.</returns>
+        public Promise Then(Func<TResult, Promise> onFulfilled, Action<Exception> onRejected)
         {
             return new Promise((resolve, reject) =>
             {
@@ -286,7 +306,15 @@ namespace PromiseCS
                 }
             });
         }
-        public new Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled, Action<Exception> onRejected)
+        /// <summary>
+        /// Returns a new <see cref="Promise{TResult}"/> that waits for this promise to Fulfill or Reject, 
+        /// then if it Fulfills, it waits for a promise returned by a given <see cref="Func{T, TResult}"/>,
+        /// otherwise it executes the other given <see cref="Action{T}"/>.
+        /// </summary>
+        /// <param name="onFulfilled">The <see cref="Func{T, TResult}"/> to execute when Fulfilled.</param>
+        /// <param name="onRejected">The <see cref="Action{T}"/> to execute when Rejected.</param>
+        /// <returns>The new <see cref="Promise{TResult}"/>.</returns>
+        public Promise<T> Then<T>(Func<TResult, Promise<T>> onFulfilled, Action<Exception> onRejected)
         {
             return new Promise<T>((resolve, reject) =>
             {

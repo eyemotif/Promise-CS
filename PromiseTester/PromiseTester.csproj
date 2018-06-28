@@ -6,7 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Promise-CS" Version="1.0.0" />
+    <Reference Include="Promise-CS">
+      <HintPath>..\Promise-CS\bin\Debug\netcoreapp2.0\Promise-CS.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

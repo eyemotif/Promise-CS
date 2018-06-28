@@ -7,6 +7,8 @@
     <PackageIconUrl>https://image.ibb.co/kdDRuo/Icon.png</PackageIconUrl>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <RepositoryUrl>https://github.com/aethine/Promise-CS</RepositoryUrl>
+    <Version>1.0.2</Version>
+    <PackageReleaseNotes>Added docs for .Then(Func&lt;Promise&gt;), bug fixes</PackageReleaseNotes>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

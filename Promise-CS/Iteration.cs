@@ -44,7 +44,7 @@ namespace PromiseCS.Iteration
         /// </summary>
         /// <param name="body">The <see cref="Action{T}"/> to execute on each <see cref="Promise{TResult}"/>'s result.</param>
         /// <returns>A <see cref="Promise"/> that will resolve when done iterating.</returns>
-        public virtual Promise ForEachAsync(Action<T> body)
+        public virtual Promise ForeachAsync(Action<T> body)
         {
             return new Promise((resolve, reject) =>
             {
@@ -81,7 +81,7 @@ namespace PromiseCS.Iteration
             return new Promise<U[]>(async (resolve, reject) =>
             {
                 List<U> result = new List<U>();
-                await ForEachAsync(t => result.Add(mapper(t)))
+                await ForeachAsync(t => result.Add(mapper(t)))
                     .Then(() => resolve(result.ToArray()))
                     .Catch(e => reject(e));
             });
@@ -92,7 +92,7 @@ namespace PromiseCS.Iteration
         /// </summary> 
         /// <returns>A <see cref="Promise{TResult}"/> that will return all the values of the promises
         /// in this collection.</returns>
-        public virtual Promise<T[]> Iterate() => MapAsync(t => t);
+        public virtual Promise<T[]> ToArray() => MapAsync(t => t);
 
         /// <summary>
         /// Gets the <see cref="AsyncEnumerator{T}"/> for this collection.
@@ -163,7 +163,10 @@ namespace PromiseCS.Iteration
         /// <summary>
         /// Releases all unmanaged resources of this async enumerator.
         /// </summary>
-        public virtual void Dispose() { }
+        public virtual void Dispose()
+        {
+            Promises?.Dispose();
+        }
         /// <summary>
         /// Moves to the next <see cref="Promise{TResult}"/>.
         /// </summary>

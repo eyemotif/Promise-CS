@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 
-namespace PromiseCS
+namespace PromiseCS.Tools
 {
     /// <summary>
     /// Provides extension methods to various <see cref="Promise"/>-related objects.

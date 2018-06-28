@@ -2,7 +2,7 @@
 Promises for C#.
 
 This is a small project, and I'm making it just because I wanted to create easy asynchronous code in c#.
-The main class library is in [Promise-CS/](Promise-CS), and there is a NuGet package to install under the same name.
+The main class library is in [Promise-CS/](Promise-CS), and there is a [NuGet package](https://www.nuget.org/packages/Promise-CS/) to install under the same name.
 
 Here is a YouTube series that I'll be doing that will go into the details on how to use this library: [click here!](https://www.youtube.com/playlist?list=PL_rR6KDNtaPIt6-pOY4wu-VNAImpJs8wr)
 
@@ -69,7 +69,7 @@ var pingPromise = new Promise<PingReply>((resolve, reject) =>
 
 - In `.Then`, `reply` will be the same value as the one that was used to call `resolve()`.
 - In `.Catch`, `e` will be the exception caught by the `catch` block, and used to call `reject()`.
-- `Finally` will be called if either `resolve()` or `reject()` was called.
+- `.Finally` will be called if either `resolve()` or `reject()` was called.
 
 Of course, `PromiseCS.Tools` provides tools so that you don't have to create your own promises:
 

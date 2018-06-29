@@ -13,16 +13,17 @@ namespace PromiseTester
     class Program
     {
         static string pingData = $"Test";
+        static Random rand = new Random();
         static void Main(string[] args)
         {
             AsyncEnumerable<string> enumerable = new AsyncEnumerable<string>(() => new AsyncGenerator<string>((yield, complete) =>
             {
                 for (int x = 0; x < 25; x++)
                 {
-                    //Console.WriteLine($"Sending \"{pingData}\"... (#{x})");
+                    Console.WriteLine($"Sending \"{pingData}\"... (#{x})");
                     yield(PTools.SendToWebSocket(
                         new Uri("wss://echo.websocket.org"),
-                        () => $"{pingData}{x}", (pingData.Length + 1) * 2
+                        () => $"{pingData}{rand.Next()}", (pingData.Length + 1) * 2
                         )
                         //.Timeout(2500)
                         .Then(bytes => Encoding.Unicode.GetString(bytes))

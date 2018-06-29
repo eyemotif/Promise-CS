@@ -303,5 +303,13 @@ namespace PromiseCS
         {
             ThisTask.Dispose();
         }
+        /// <summary>
+        /// Converts this <see cref="Promise"/> into a human readable string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"Promise{{{(IsCompleted ? $"{(IsFulfilled ? "Fulfilled" : $"Rejected: {Error}")}" : "Pending...")}}}";
+        }
     }
 }

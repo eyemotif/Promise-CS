@@ -355,5 +355,13 @@ namespace PromiseCS
         /// </summary>
         /// <returns>The <see cref="TaskAwaiter{TResult}"/> for this <see cref="Promise{TResult}"/>.</returns>
         public new TaskAwaiter<TResult> GetAwaiter() => GetTypedTask().GetAwaiter();
+        /// <summary>
+        /// Converts this <see cref="Promise{TResult}"/> into a human readable string.
+        /// </summary>
+        /// <returns></returns>
+        public override string ToString()
+        {
+            return $"Promise[{(IsCompleted ? $"{(IsFulfilled ? $"Fulfilled: {Result}" : $"Rejected: {Error}")}" : "Pending...")}]";
+        }
     }
 }

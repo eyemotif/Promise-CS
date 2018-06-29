@@ -322,15 +322,26 @@ namespace PromiseCS.Iteration
             {
                 Generator(p =>
                 {
+                    if (finished)
+                    {
+                        reject(new InvalidOperationException("Generator already finished"));
+                        return;
+                    }
                     yieldQueue.Enqueue(p);
+                    Console.WriteLine($"Enqueueing {p}");
                 },
                 () =>
                 {
+                    if (finished)
+                    {
+                        reject(new InvalidOperationException("Generator already finished"));
+                        return;
+                    }
                     finished = true;
                 });
                 resolve();
             })
-            .Finally(() => finished = true);
+            .Then(() => finished = true, e => throw e);
 
             while (!finished || yieldQueue.Count > 0)
             {
@@ -352,6 +363,7 @@ namespace PromiseCS.Iteration
                 return null;
             }
             generated.Current.Wait();
+            Console.WriteLine(generated.Current); //Always test25??
             return generated.Current;
         }
         /// <summary>

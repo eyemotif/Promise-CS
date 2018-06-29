@@ -201,7 +201,7 @@ namespace PromiseCS.Iteration
         /// <summary>
         /// Resets this asynchronous enumerator.
         /// </summary>
-        public void Reset()
+        public virtual void Reset()
         {
             currentIndex = -1;
         }
@@ -283,5 +283,92 @@ namespace PromiseCS.Iteration
             next?.Wait();
             return next;
         }
+        /// <summary>
+        /// Resets this <see cref="AsyncStreamEnumerator{T}"/>.
+        /// </summary>
+        public override void Reset()
+        {
+            completedPromises.Clear();
+            base.Reset();
+        }
     }
+    /// <summary>
+    /// Implements a yield-like asynchronous enumerator.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class AsyncGenerator<T> : AsyncEnumerator<T>
+    {
+        /// <summary>
+        /// The function to yield a new promise.
+        /// </summary>
+        protected Generator<Promise<T>> Generator { get; set; }
+        private IEnumerator<Promise<T>> generated;
+
+        /// <summary>
+        /// Creates a new <see cref="AsyncGenerator{T}"/> from a <see cref="Generator{T}"/>.
+        /// </summary>
+        /// <param name="Generator">The <see cref="Generator{T}"/> to use.</param>
+        public AsyncGenerator(Generator<Promise<T>> Generator)
+        {
+            this.Generator = Generator;
+            generated = null;
+        }
+
+        private IEnumerator<Promise<T>> Generate()
+        {
+            Queue<Promise<T>> yieldQueue = new Queue<Promise<T>>();
+            bool finished = false;
+            new Promise((resolve, reject) =>
+            {
+                Generator(p =>
+                {
+                    yieldQueue.Enqueue(p);
+                },
+                () =>
+                {
+                    finished = true;
+                });
+                resolve();
+            })
+            .Finally(() => finished = true);
+
+            while (!finished || yieldQueue.Count > 0)
+            {
+                if (yieldQueue.TryDequeue(out Promise<T> toYield))
+                    yield return toYield;
+            }
+        }
+        /// <summary>
+        /// If needed, generate a new set of promises, then wait for the next promise to complete,
+        /// and return it.
+        /// </summary>
+        /// <returns>The next <see cref="Promise{T}"/></returns>
+        protected override Promise<T> GetNewPromise()
+        {
+            if (generated == null) generated = Generate();
+            if (!generated.MoveNext())
+            {
+                generated = null;
+                return null;
+            }
+            generated.Current.Wait();
+            return generated.Current;
+        }
+        /// <summary>
+        /// Resets this <see cref="AsyncGenerator{T}"/>
+        /// </summary>
+        public override void Reset()
+        {
+            completedPromises.Clear();
+            base.Reset();
+        }
+    }
+    /// <summary>
+    /// Provides a function for a generator. The first parameter <see langword="yield"/>s a value, 
+    /// the second finishes iteration early, but finishing the function does the same thing.
+    /// </summary>
+    /// <typeparam name="T">The type to <see langword="yield"/>.</typeparam>
+    /// <param name="yield">The <see langword="yield"/> action.</param>
+    /// <param name="finish">The completion action.</param>
+    public delegate void Generator<T>(Action<T> yield, Action finish);
 }

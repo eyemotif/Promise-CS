@@ -25,7 +25,7 @@ namespace PromiseTester
                         new Uri("wss://echo.websocket.org"),
                         () => $"{pingData}{rand.Next()}", (pingData.Length + 1) * 2
                         )
-                        //.Timeout(2500)
+                        .Timeout(2500)
                         .Then(bytes => Encoding.Unicode.GetString(bytes))
                         );
                 }

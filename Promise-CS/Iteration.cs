@@ -363,7 +363,7 @@ namespace PromiseCS.Iteration
                 return null;
             }
             generated.Current.Wait();
-            Console.WriteLine(generated.Current); //Always test25??
+            Console.WriteLine(generated.Current);
             return generated.Current;
         }
         /// <summary>

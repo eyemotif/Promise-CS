@@ -328,7 +328,6 @@ namespace PromiseCS.Iteration
                         return;
                     }
                     yieldQueue.Enqueue(p);
-                    Console.WriteLine($"Enqueueing {p}");
                 },
                 () =>
                 {
@@ -363,7 +362,6 @@ namespace PromiseCS.Iteration
                 return null;
             }
             generated.Current.Wait();
-            Console.WriteLine(generated.Current);
             return generated.Current;
         }
         /// <summary>

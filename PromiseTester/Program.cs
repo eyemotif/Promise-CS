@@ -22,9 +22,9 @@ namespace PromiseTester
                 {
                     Console.WriteLine($"Sending \"{pingData}\"... (#{x})");
                     yield(PTools.SendToWebSocket(
-                        new Uri("wss://echo.websocket.org"),
-                        () => $"{pingData}{rand.Next()}", (pingData.Length + 1) * 2
-                        )
+                            new Uri("wss://echo.websocket.org"),
+                            () => $"{pingData}{rand.Next()}", (pingData.Length + 1) * 2
+                            )
                         .Timeout(2500)
                         .Then(bytes => Encoding.Unicode.GetString(bytes))
                         );
@@ -34,16 +34,16 @@ namespace PromiseTester
             Stopwatch watch = new Stopwatch();
             watch.Start();
 
-            //The following two blocks of code do almost the same thing, but .ForEachAsync has promise error handling:
+            //The following two blocks of code do almost the same thing, but .ForeachAsync has promise error handling:
 
-            foreach (string s in enumerable)
-            {
-                Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
-                watch.Restart();
-            }
+            //foreach (string s in enumerable)
+            //{
+            //    Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
+            //    watch.Restart();
+            //}
 
             //var enumeratePromise = enumerable
-            //    .ForEachAsync(s =>
+            //    .ForeachAsync(s =>
             //    {
             //        Console.WriteLine($"Received \"{s}\" in {watch.Elapsed}");
             //        watch.Restart();

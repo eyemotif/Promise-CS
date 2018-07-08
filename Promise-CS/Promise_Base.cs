@@ -101,7 +101,7 @@ namespace PromiseCS
         public static implicit operator Task(Promise prom) => prom.ThisTask;
 
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that waits for this promise to Fulfill, then execute 
+        /// Returns a new <see cref="Promise"/> that will wait for this promise to Fulfill, then execute 
         /// an <see cref="Action"/>.
         /// </summary>
         /// <param name="onFulfilled">The <see cref="Action"/> to execute.</param>
@@ -121,7 +121,7 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that waits for this promise to either Fulfill or Reject,
+        /// Returns a new <see cref="Promise"/> that will wait for this promise to either Fulfill or Reject,
         /// then executes one of two <see cref="Action"/>s accordingly.
         /// </summary>
         /// <param name="onFulfilled">The <see cref="Action"/> when this <see cref="Promise"/> is Fulfilled.</param>
@@ -146,7 +146,8 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that, if this promise is Rejected, executes an <see cref="Action"/>.
+        /// Returns a new <see cref="Promise"/> that, if this promise is Rejected, will execute 
+        /// an <see cref="Action"/>.
         /// </summary>
         /// <param name="onRejected">The <see cref="Action"/> to execute.</param>
         /// <returns>The new <see cref="Promise"/>.</returns>
@@ -165,7 +166,7 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that waits for this promise to Complete, then executes
+        /// Returns a new <see cref="Promise"/> that will wait for this promise to Complete, then executes
         /// an <see cref="Action"/>.
         /// </summary>
         /// <param name="onFinally">The <see cref="Action"/>.</param>
@@ -183,7 +184,7 @@ namespace PromiseCS
         }
 
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that waits for this promise to Fulfill, then waits 
+        /// Returns a new <see cref="Promise"/> that will wait for this promise to Fulfill, then waits 
         /// for a promise returned by a given <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="onFulfilled">The <see cref="Func{TResult}"/> to execute when Fulfilled.</param>
@@ -205,7 +206,7 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise{TResult}"/> that waits for this promise to Fulfill, 
+        /// Returns a new <see cref="Promise{TResult}"/> that will wait for this promise to Fulfill, 
         /// then waits for a promise returned by a given <see cref="Func{TResult}"/>.
         /// </summary>
         /// <param name="onFulfilled">The <see cref="Func{TResult}"/> to execute when Fulfilled.</param>
@@ -227,7 +228,7 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise"/> that waits for this promise to Fulfill or Reject, 
+        /// Returns a new <see cref="Promise"/> that will wait for this promise to Fulfill or Reject, 
         /// then if it Fulfills, it waits for a promise returned by a given <see cref="Func{TResult}"/>,
         /// otherwise it executes the other given <see cref="Action{T}"/>.
         /// </summary>
@@ -255,7 +256,7 @@ namespace PromiseCS
             });
         }
         /// <summary>
-        /// Returns a new <see cref="Promise{TResult}"/> that waits for this promise to Fulfill or Reject, 
+        /// Returns a new <see cref="Promise{TResult}"/> that will wait for this promise to Fulfill or Reject, 
         /// then if it Fulfills, it waits for a promise returned by a given <see cref="Func{TResult}"/>,
         /// otherwise it executes the other given <see cref="Action{T}"/>.
         /// </summary>

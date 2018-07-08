@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.WebSockets;
 using System.IO;
+using System.Text.RegularExpressions;
 
 namespace PromiseCS.Tools
 {
@@ -15,7 +16,7 @@ namespace PromiseCS.Tools
     public static class PTools
     {
         /// <summary>
-        /// Makes a web request to a uri.
+        /// Will a web request to a uri.
         /// </summary>
         /// <param name="uri">The uri to request.</param>
         /// <returns>A new <see cref="Promise{String}"/> that will return the value of the response.</returns>
@@ -38,7 +39,7 @@ namespace PromiseCS.Tools
             });
         }
         /// <summary>
-        /// Downloads a file from a uri to a file on disk.
+        /// Will download a file from a uri to a file on disk.
         /// </summary>
         /// <param name="fromUri">The uri to download from.</param>
         /// <param name="toDiskPath">The file on disk to download to.</param>
@@ -57,7 +58,7 @@ namespace PromiseCS.Tools
             });
         }
         /// <summary>
-        /// Downloads data from a uri.
+        /// Will download data from a uri.
         /// </summary>
         /// <param name="fromUri">The uri to download from.</param>
         /// <returns>A new <see cref="Promise{Byte}"/> that will return the data downloaded.</returns>
@@ -89,7 +90,7 @@ namespace PromiseCS.Tools
             });
         }
         /// <summary>
-        /// Sends data to a <see cref="Socket"/> under a given <see cref="IPAddress"/> and port.
+        /// Will send data to a <see cref="Socket"/> under a given <see cref="IPAddress"/> and port.
         /// </summary>
         /// <param name="addr">The <see cref="IPAddress"/> of the <see cref="Socket"/>.</param>
         /// <param name="port">The port of the <see cref="Socket"/>.</param>
@@ -121,7 +122,7 @@ namespace PromiseCS.Tools
             });
         }
         /// <summary>
-        /// Sends data to a <see cref="WebSocket"/> under a given <see cref="Uri"/>.
+        /// Will send data to a <see cref="WebSocket"/> under a given <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">The <see cref="Uri"/> of the <see cref="WebSocket"/>.</param>
         /// <param name="getData">A <see cref="Func{T}"/> that returns data to send to the <see cref="WebSocket"/>.</param>
@@ -152,7 +153,7 @@ namespace PromiseCS.Tools
             });
         }
         /// <summary>
-        /// Sends data to a <see cref="WebSocket"/> under a given <see cref="Uri"/>.
+        /// Will send data to a <see cref="WebSocket"/> under a given <see cref="Uri"/>.
         /// </summary>
         /// <param name="uri">The <see cref="Uri"/> of the <see cref="WebSocket"/>.</param>
         /// <param name="getData">A <see cref="Func{T}"/> that returns data to send to the <see cref="WebSocket"/>.</param>
@@ -161,6 +162,20 @@ namespace PromiseCS.Tools
         public static Promise<byte[]> SendToWebSocket(Uri uri, Func<string> getData, int bufferSize = 1024)
         {
             return SendToWebSocket(uri, () => Encoding.Unicode.GetBytes(getData()), true, bufferSize);
+        }
+        /// <summary>
+        /// Will return a <see cref="MatchCollection"/> of all occurrences of a regular expression in a string.
+        /// </summary>
+        /// <param name="input">The string to search.</param>
+        /// <param name="expression">The <see cref="Regex"/> to use for a regular expression.</param>
+        /// <returns>A <see cref="MatchCollection"/> of all occurrences of a regular expression in a string.</returns>
+        public static Promise<MatchCollection> GetMatches(string input, Regex expression)
+        {
+            return new Promise<MatchCollection>((resolve, reject) =>
+            {
+                try { resolve(expression.Matches(input)); }
+                catch (Exception e) { reject(e); }
+            });
         }
     }
 }

@@ -237,10 +237,12 @@ namespace PromiseCS.Iteration
             else return null;
         }
     }
+
     /// <summary>
     /// Represents an asynchronous enumerator that executes a function for every new value.
     /// </summary>
     /// <typeparam name="T">The type of the <see cref="Promise{TResult}"/>s.</typeparam>
+    [Obsolete]
     public class AsyncStreamEnumerator<T> : AsyncEnumerator<T>
     {
         /// <summary>

@@ -9,6 +9,8 @@
     <RepositoryUrl>https://github.com/aethine/Promise-CS</RepositoryUrl>
     <Version>1.1.1</Version>
     <PackageReleaseNotes>Bug fixes</PackageReleaseNotes>
+    <PackageProjectUrl>https://github.com/aethine/Promise-CS</PackageProjectUrl>
+    <PackageTags>promise</PackageTags>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
